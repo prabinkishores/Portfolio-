@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logistics & Warehousing — Prabin Sundaram</title>
+<meta name="description" content="Logistics and warehouse operations experience — documentation, carrier coordination, and team leadership.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F1319; --panel:#171E27; --panel-2:#1D2530; --line:#2B3543; --line-soft:#232B36;
+  --ink:#ECEFF3; --ink-dim:#9AA5B4; --ink-faint:#5F6B7A; --amber:#FF7A29; --amber-dim:#B85A1F;
+  --cyan:#49D3C7; --paper:#E7E2D6; --display:'Big Shoulders Display',sans-serif;
+  --body:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--body); line-height:1.7;
+  background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
+  background-size:22px 22px;
+}
+a{color:inherit;}
+.wrap{max-width:900px;margin:0 auto;padding:0 28px;}
+::selection{background:var(--amber);color:#12100C;}
+
+header{
+  position:sticky;top:0;z-index:100;background:rgba(15,19,25,0.9);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav-inner{max-width:900px;margin:0 auto;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.back-link{
+  font-family:var(--mono);font-size:13px;letter-spacing:0.06em;text-decoration:none;color:var(--ink-dim);
+  display:flex;align-items:center;gap:8px;transition:color .15s ease;
+}
+.back-link:hover{color:var(--cyan);}
+.brand-dot{width:8px;height:8px;background:var(--amber);border-radius:50%;box-shadow:0 0 0 3px rgba(255,122,41,0.18);}
+
+main{padding:64px 0 100px;}
+.page-eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);
+  display:block;margin-bottom:16px;
+}
+h1.page-title{
+  font-family:var(--display);font-weight:900;font-size:clamp(38px,6vw,64px);line-height:0.95;
+  letter-spacing:0.01em;text-transform:uppercase;color:var(--ink);margin-bottom:18px;
+}
+.page-sub{color:var(--ink-dim);max-width:620px;font-size:15.5px;margin-bottom:44px;}
+.shimmer-bar{
+  height:3px;width:100px;margin:22px 0 0;border-radius:2px;
+  background:linear-gradient(90deg, var(--amber), var(--cyan), var(--amber));
+}
+
+.block{margin-bottom:48px;}
+.block h2{
+  font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:0.02em;
+  text-transform:uppercase;color:var(--ink);margin-bottom:20px;padding-bottom:10px;
+  border-bottom:1px solid var(--line);
+}
+.entry{border-left:2px solid var(--line);padding:4px 0 4px 22px;margin-bottom:28px;position:relative;}
+.entry::before{
+  content:'';position:absolute;left:-5px;top:8px;width:8px;height:8px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 0 3px rgba(73,211,199,0.15);
+}
+.entry-role{font-family:var(--body);font-weight:700;font-size:16.5px;color:var(--ink);}
+.entry-meta{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);letter-spacing:0.04em;margin:4px 0 12px;}
+.entry ul{padding-left:18px;color:var(--ink-dim);font-size:14.5px;}
+.entry ul li{margin-bottom:8px;}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+.tag-row span{
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);border:1px solid var(--line);
+  padding:6px 12px;border-radius:2px;letter-spacing:0.03em;
+}
+
+.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 28px;}
+.skill-grid div{font-size:14px;color:var(--ink-dim);}
+.skill-grid strong{color:var(--ink);}
+
+.placeholder-box{
+  border:2px dashed var(--line);border-radius:6px;padding:52px 36px;text-align:center;
+  background:radial-gradient(ellipse at top, rgba(255,122,41,0.05), transparent 60%);
+}
+.placeholder-box .icon{font-size:34px;margin-bottom:18px;color:var(--amber);}
+.placeholder-box h3{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;margin-bottom:12px;}
+.placeholder-box p{color:var(--ink-dim);max-width:440px;margin:0 auto;font-size:14.5px;}
+
+footer{border-top:1px solid var(--line-soft);padding:30px 0;margin-top:auto;}
+.footer-inner{
+  max-width:900px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;
+  align-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);
+  letter-spacing:0.06em;flex-wrap:wrap;gap:10px;
+}
+@media (max-width:640px){ .skill-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="back-link"><span class="brand-dot"></span> ← Back to Portfolio</a>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <span class="page-eyebrow">LOG–01 // SKILL DETAIL</span>
+    <h1 class="page-title">Logistics &amp; Warehousing</h1>
+    <div class="shimmer-bar" aria-hidden="true"></div>
+    <p class="page-sub">Supply chain optimization, inventory control, and shift &amp; team supervision across 8+ years in container operations and import/export documentation.</p>
+    <div class="block">
+      <h2>Professional Summary</h2>
+      <p style="color:var(--ink-dim);font-size:14.5px;max-width:680px;">Logistics and warehouse operations professional with 8+ years of experience across container operations, inventory control, and shipping documentation for high-value energy and FMCG accounts in Singapore and Malaysia. Skilled in preparing and verifying import/export documentation and coordinating courier bookings and tracking with DHL and other carriers, with a zero-failed-record documentation history across internal and client audits. Experienced in leading multi-shift teams of up to 22 staff, liaising with carriers, freight forwarders, and 3PL providers, and conducting investigations into shipment discrepancies with formal QIR/SIR reporting.</p>
+    </div>
+
+    <div class="block">
+      <h2>Experience</h2>
+
+      <div class="entry">
+        <div class="entry-role">Warehouse Supervisor</div>
+        <div class="entry-meta">CWT Integrated Pte. Ltd. (ExxonMobil SBA Project) · Singapore · Jul 2022 – Present</div>
+        <ul>
+          <li>Prepare, verify, and file import/export shipping documentation — delivery orders, bills of lading, commercial invoices, packing lists, and arrival notices — for 60+ inbound containers per month, achieving a zero-failed-record outcome across internal and client documentation audits.</li>
+          <li>Coordinate courier and sample shipment bookings with DHL and other carriers for ExxonMobil global sample dispatch, tracking shipments end-to-end and following up on delays.</li>
+          <li>Liaise daily with carriers, freight forwarders, and internal teams to schedule and execute inbound/outbound container movements, maintaining 100% on-time dispatch with zero short-picks across entire tenure.</li>
+          <li>Investigate shipment discrepancies, delays, and customer complaints, producing formal Quality Incident Reports (QIR) and Safety Incident Reports (SIR) with root-cause analysis and corrective actions.</li>
+          <li>Lead a cross-shift team of up to 22 warehouse staff across a 2-floor, 26-bay facility, driving average daily throughput of 30 containers.</li>
+          <li>Maintain accurate daily, weekly, and monthly records using Accellos WMS and ISCM, ensuring full audit readiness.</li>
+          <li>Sustain 99%+ inventory accuracy through RFID/RF scanning and cycle audits; zero reportable WSH incidents across 3+ years of supervisory tenure.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-role">Warehouse Assistant (Acting Supervisor)</div>
+        <div class="entry-meta">CWT Integrated Pte. Ltd. (ExxonMobil SBA Project) · Singapore · Mar 2018 – Jun 2022</div>
+        <ul>
+          <li>Coordinated ExxonMobil global sample dispatch operations, preparing shipping documentation and courier bookings in full compliance with client specifications.</li>
+          <li>Deputised as Acting Supervisor, independently managing floor operations, shift handovers, team coordination, and throughput targets during supervisor absences.</li>
+          <li>Processed inbound and outbound container shipments, including manual and electronic inventory counting via RF and RFID scanning, with zero discrepancies.</li>
+          <li>Operated forklifts, reach trucks, VNA machines, scissor lifts, and power pallet trucks with zero equipment incidents over 4 years.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-role">Warehouse Coordinator — Aerosol &amp; Non-Aerosol Division</div>
+        <div class="entry-meta">DHL Supply Chain Sdn. Bhd. · Malaysia · Dec 2016 – Nov 2017</div>
+        <ul>
+          <li>Managed the full warehouse cycle — receiving, inventory management, material issuance, and outbound documentation — for aerosol and non-aerosol FMCG lines under strict hazardous goods protocols.</li>
+          <li>Achieved a 12-month accident-free record with zero short-picks or over-picks on all outbound shipments throughout tenure.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-role">Warehouse Quality Control Officer</div>
+        <div class="entry-meta">British American Tobacco Sdn. Bhd. · Malaysia · Jan 2016 – Dec 2016</div>
+        <ul>
+          <li>Managed quality control of high-value tobacco products with zero instances of damaged goods dispatched; conducted weekly inspection cycles to identify and quarantine non-conforming stock.</li>
+          <li>Maintained a safe, clean, and audit-ready warehouse environment in full compliance with operational and safety standards.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Skills &amp; Systems</h2>
+      <div class="skill-grid">
+        <div><strong>Documentation:</strong> Delivery Orders, Bills of Lading, Commercial Invoices, Packing Lists, Arrival Notices, Incoterms Basics</div>
+        <div><strong>Courier &amp; Carrier:</strong> DHL Booking &amp; Tracking, Freight Forwarder Coordination, 3PL Operations</div>
+        <div><strong>Investigation &amp; Audit:</strong> QIR / SIR Report Writing, Root-Cause Analysis, Audit-Ready Recordkeeping</div>
+        <div><strong>WMS &amp; Systems:</strong> Accellos WMS, ISCM, RF Scanning, RFID, Manual Inventory Control</div>
+        <div><strong>Equipment:</strong> Forklift, Reach Truck, VNA, Scissor Lift, Power Pallet Truck</div>
+        <div><strong>Leadership:</strong> Multi-Shift Team Management (up to 22 staff), SOP Development, Safety Audits, KPI Tracking</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Certifications &amp; Education</h2>
+      <div class="tag-row">
+        <span>Forklift Operator Licence — Wong Fong Academy, SG</span>
+        <span>Work at Height Certificate — Absolute Kinetics, SG</span>
+        <span>Scissor Lift Operator Certificate — Aver Asia, SG</span>
+        <span>WSH Control Measures (Level 4)</span>
+        <span>Forklift Operator Licence — UMW Holdings, Malaysia</span>
+        <span>Diploma in Civil Engineering — BWDA Polytechnic, Tamil Nadu (2012–2015)</span>
+      </div>
+    </div>
+
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 PRABIN SUNDARAM</span>
+    <span>CRAFTED WITH SYSTEMS THINKING</span>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frontend Build — Prabin Sundaram</title>
+<meta name="description" content="Frontend Build — details coming soon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F1319; --panel:#171E27; --panel-2:#1D2530; --line:#2B3543; --line-soft:#232B36;
+  --ink:#ECEFF3; --ink-dim:#9AA5B4; --ink-faint:#5F6B7A; --amber:#FF7A29; --amber-dim:#B85A1F;
+  --cyan:#49D3C7; --paper:#E7E2D6; --display:'Big Shoulders Display',sans-serif;
+  --body:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--body); line-height:1.7;
+  background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
+  background-size:22px 22px;
+}
+a{color:inherit;}
+.wrap{max-width:900px;margin:0 auto;padding:0 28px;}
+::selection{background:var(--amber);color:#12100C;}
+
+header{
+  position:sticky;top:0;z-index:100;background:rgba(15,19,25,0.9);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav-inner{max-width:900px;margin:0 auto;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.back-link{
+  font-family:var(--mono);font-size:13px;letter-spacing:0.06em;text-decoration:none;color:var(--ink-dim);
+  display:flex;align-items:center;gap:8px;transition:color .15s ease;
+}
+.back-link:hover{color:var(--cyan);}
+.brand-dot{width:8px;height:8px;background:var(--amber);border-radius:50%;box-shadow:0 0 0 3px rgba(255,122,41,0.18);}
+
+main{padding:64px 0 100px;}
+.page-eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);
+  display:block;margin-bottom:16px;
+}
+h1.page-title{
+  font-family:var(--display);font-weight:900;font-size:clamp(38px,6vw,64px);line-height:0.95;
+  letter-spacing:0.01em;text-transform:uppercase;color:var(--ink);margin-bottom:18px;
+}
+.page-sub{color:var(--ink-dim);max-width:620px;font-size:15.5px;margin-bottom:44px;}
+.shimmer-bar{
+  height:3px;width:100px;margin:22px 0 0;border-radius:2px;
+  background:linear-gradient(90deg, var(--amber), var(--cyan), var(--amber));
+}
+
+.block{margin-bottom:48px;}
+.block h2{
+  font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:0.02em;
+  text-transform:uppercase;color:var(--ink);margin-bottom:20px;padding-bottom:10px;
+  border-bottom:1px solid var(--line);
+}
+.entry{border-left:2px solid var(--line);padding:4px 0 4px 22px;margin-bottom:28px;position:relative;}
+.entry::before{
+  content:'';position:absolute;left:-5px;top:8px;width:8px;height:8px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 0 3px rgba(73,211,199,0.15);
+}
+.entry-role{font-family:var(--body);font-weight:700;font-size:16.5px;color:var(--ink);}
+.entry-meta{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);letter-spacing:0.04em;margin:4px 0 12px;}
+.entry ul{padding-left:18px;color:var(--ink-dim);font-size:14.5px;}
+.entry ul li{margin-bottom:8px;}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+.tag-row span{
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);border:1px solid var(--line);
+  padding:6px 12px;border-radius:2px;letter-spacing:0.03em;
+}
+
+.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 28px;}
+.skill-grid div{font-size:14px;color:var(--ink-dim);}
+.skill-grid strong{color:var(--ink);}
+
+.block-intro{color:var(--ink-dim);font-size:14.5px;margin-bottom:24px;max-width:640px;}
+.block-intro a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(73,211,199,0.35);}
+.block-intro a:hover{color:var(--amber);border-color:rgba(255,122,41,0.4);}
+
+.app-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:32px 32px 36px;margin-bottom:36px;
+}
+.app-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  margin-bottom:14px;padding-bottom:20px;border-bottom:1px solid var(--line-soft);
+}
+.app-head-left{display:flex;align-items:center;gap:14px;}
+.app-icon{
+  width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;background:var(--panel-2);border:1px solid var(--line);flex-shrink:0;
+}
+.app-name{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;letter-spacing:0.01em;color:var(--ink);}
+.app-tagline{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);margin-top:3px;}
+.app-link{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:0.03em;color:var(--bg);background:var(--amber);
+  padding:10px 18px;border-radius:5px;text-decoration:none;white-space:nowrap;transition:background .15s ease;
+  display:inline-flex;align-items:center;gap:7px;font-weight:600;
+}
+.app-link:hover{background:#ff8c47;}
+
+.app-desc{color:var(--ink-dim);font-size:14.5px;margin-bottom:22px;max-width:640px;}
+
+.phone-row{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:6px;}
+.phone-mock{
+  width:220px;background:#05070A;border:3px solid #2A3340;border-radius:26px;padding:9px;
+  box-shadow:0 16px 36px rgba(0,0,0,0.5);flex-shrink:0;
+}
+.phone-notch{width:60px;height:16px;background:#05070A;border-radius:0 0 12px 12px;margin:0 auto 6px;position:relative;top:3px;}
+.phone-screen{
+  background:var(--bg);border-radius:18px;overflow:hidden;height:420px;display:flex;flex-direction:column;
+  font-family:var(--body);position:relative;
+}
+.ps-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 8px;font-family:var(--mono);font-size:9.5px;color:var(--ink-faint);}
+.ps-header{padding:2px 14px 12px;display:flex;align-items:center;justify-content:space-between;}
+.ps-title{font-family:var(--display);font-weight:800;font-size:15px;text-transform:uppercase;color:var(--ink);}
+.ps-toggle{width:26px;height:14px;border-radius:8px;background:var(--panel-2);border:1px solid var(--line);position:relative;}
+.ps-toggle::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:var(--amber);top:1px;left:1px;}
+.ps-tabs{display:flex;gap:6px;padding:0 14px 10px;}
+.ps-tab{font-family:var(--mono);font-size:9px;padding:5px 10px;border-radius:12px;color:var(--ink-faint);border:1px solid var(--line);}
+.ps-tab.active{color:var(--bg);background:var(--amber);border-color:var(--amber);}
+.ps-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;padding:0 14px 12px;}
+.ps-stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;}
+.ps-stat-label{font-family:var(--mono);font-size:7.5px;letter-spacing:0.06em;color:var(--ink-faint);text-transform:uppercase;}
+.ps-stat-val{font-family:var(--display);font-weight:800;font-size:14px;color:var(--ink);margin-top:2px;}
+.ps-stat-val.amber{color:var(--amber);}
+.ps-stat-val.cyan{color:var(--cyan);}
+.ps-list{flex:1;padding:0 14px;display:flex;flex-direction:column;gap:7px;overflow:hidden;}
+.ps-row{
+  display:flex;align-items:center;justify-content:space-between;background:var(--panel);
+  border:1px solid var(--line-soft);border-radius:8px;padding:8px 10px;
+}
+.ps-row-left{display:flex;align-items:center;gap:8px;}
+.ps-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.ps-row-cat{font-size:10px;color:var(--ink);font-weight:600;}
+.ps-row-meta{font-family:var(--mono);font-size:7.5px;color:var(--ink-faint);margin-top:1px;}
+.ps-row-amt{font-family:var(--mono);font-size:10.5px;font-weight:600;}
+.ps-row-amt.neg{color:#FF7A7A;}
+.ps-row-amt.pos{color:#7AE0A0;}
+.ps-fab{
+  position:absolute;bottom:14px;right:14px;width:36px;height:36px;border-radius:50%;
+  background:var(--amber);color:var(--bg);display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;box-shadow:0 6px 14px rgba(255,122,41,0.4);
+}
+.ps-gmail-banner{
+  margin:0 14px 10px;background:rgba(73,211,199,0.08);border:1px solid rgba(73,211,199,0.3);
+  border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;
+}
+.ps-gmail-banner span{font-family:var(--mono);font-size:8px;color:var(--cyan);line-height:1.4;}
+.ps-scheme-card{background:var(--panel);border:1px solid var(--line-soft);border-radius:9px;padding:9px 10px;margin:0 0 8px;}
+.ps-scheme-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+.ps-scheme-name{font-size:10.5px;font-weight:700;color:var(--ink);}
+.ps-scheme-type{font-family:var(--mono);font-size:7px;color:var(--bg);background:var(--cyan);padding:2px 6px;border-radius:8px;letter-spacing:0.04em;}
+.ps-scheme-bar{height:4px;background:var(--panel-2);border-radius:2px;overflow:hidden;margin:5px 0;}
+.ps-scheme-bar-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--cyan));}
+.ps-scheme-nums{display:flex;justify-content:space-between;font-family:var(--mono);font-size:8px;color:var(--ink-faint);}
+.ps-scheme-nums b{color:var(--ink);font-family:var(--body);}
+.phone-caption{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);text-align:center;margin-top:10px;letter-spacing:0.03em;}
+
+.app-subhead{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan);
+  margin-bottom:12px;margin-top:26px;
+}
+.feature-list{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 20px;margin-bottom:6px;}
+.feature-list li{
+  color:var(--ink-dim);font-size:13.5px;padding-left:20px;position:relative;line-height:1.5;
+}
+.feature-list li::before{
+  content:'▸';position:absolute;left:0;top:0;color:var(--amber);font-size:13px;
+}
+
+.tech-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.tech-tags span{
+  font-family:var(--mono);font-size:11px;color:var(--cyan);border:1px solid rgba(73,211,199,0.3);
+  background:rgba(73,211,199,0.06);padding:5px 11px;border-radius:2px;letter-spacing:0.03em;
+}
+
+.code-block{
+  background:#0B0E13;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+}
+.code-block-header{
+  display:flex;align-items:center;justify-content:space-between;padding:9px 16px;
+  background:var(--panel-2);border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);letter-spacing:0.03em;
+}
+.code-block pre{
+  padding:18px 20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:#C9D3DE;
+}
+.code-block code{font-family:var(--mono);}
+.tok-kw{color:var(--amber);}
+.tok-str{color:#9EE6A0;}
+.tok-com{color:var(--ink-faint);}
+.tok-type{color:var(--cyan);}
+
+@media (max-width:640px){
+  .feature-list{grid-template-columns:1fr;}
+  .app-card{padding:24px 20px 28px;}
+}
+
+.placeholder-box{
+  border:2px dashed var(--line);border-radius:6px;padding:52px 36px;text-align:center;
+  background:radial-gradient(ellipse at top, rgba(255,122,41,0.05), transparent 60%);
+}
+.placeholder-box .icon{font-size:34px;margin-bottom:18px;color:var(--amber);}
+.placeholder-box h3{font-family:var(--display);font-weight:800;font-size:24px;text-transform:uppercase;margin-bottom:12px;}
+.placeholder-box p{color:var(--ink-dim);max-width:440px;margin:0 auto;font-size:14.5px;}
+
+footer{border-top:1px solid var(--line-soft);padding:30px 0;margin-top:auto;}
+.footer-inner{
+  max-width:900px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;
+  align-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);
+  letter-spacing:0.06em;flex-wrap:wrap;gap:10px;
+}
+@media (max-width:640px){ .skill-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="back-link"><span class="brand-dot"></span> ← Back to Portfolio</a>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <span class="page-eyebrow">DEV–04 // SKILL DETAIL</span>
+    <h1 class="page-title">Frontend Build</h1>
+    <div class="shimmer-bar" aria-hidden="true"></div>
+    <p class="page-sub">Semantic HTML, CSS, responsive layouts, and Apps Script web apps.</p>
+    <div class="block">
+      <p class="block-intro">Two mobile-first web apps I built and shipped end-to-end — from data model to UI to AI-assisted automation. Both are open-source on GitHub.</p>
+
+      <!-- APP 1: Expense Tracker -->
+      <div class="app-card">
+        <div class="app-head">
+          <div class="app-head-left">
+            <div class="app-icon">💸</div>
+            <div>
+              <div class="app-name">Expense Tracker</div>
+              <div class="app-tagline">Dual-pane finance tracker · Gmail auto-sync · Gemini AI</div>
+            </div>
+          </div>
+          <a class="app-link" href="https://github.com/prabinkishores/Expense-Tracker" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+
+        <p class="app-desc">An elegant, dual-pane personal finance tracker for logging daily, weekly, and monthly expenses and savings. The standout feature is automatic transaction capture: it connects to Gmail (read-only OAuth) to detect DBS Bank alert emails, then uses the Gemini API to parse each alert into a structured transaction — amount, category, and description — so I don't have to manually enter every purchase.</p>
+
+        <div class="app-subhead">How I use it</div>
+        <ul class="feature-list">
+          <li>Log a daily expense or saving entry in seconds via the dual-pane add form</li>
+          <li>Let bank SMS/email alerts auto-populate transactions via Gmail sync</li>
+          <li>Gemini AI reads each bank alert and classifies category + amount automatically</li>
+          <li>Check today / this-week / this-month / all-time totals at a glance</li>
+          <li>Browse spending by category — Food, Transport, Bills, Rent, and more</li>
+          <li>Track savings sources separately — Salary, Investments, Side Hustle, Refunds</li>
+          <li>Switch between multiple country/currency formats and locales</li>
+          <li>Export the full transaction history to Excel (.xlsx) for records</li>
+          <li>Works fully offline with local persistence; syncs to Firebase when online</li>
+          <li>Dark mode built in for low-light daily use</li>
+        </ul>
+
+        <div class="app-subhead">App Preview — Mobile</div>
+        <div class="phone-row">
+          <div>
+            <div class="phone-mock">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <div class="ps-bar"><span>9:41</span><span>●●●●</span></div>
+                <div class="ps-header"><span class="ps-title">Expense Tracker</span><span class="ps-toggle"></span></div>
+                <div class="ps-tabs"><span class="ps-tab active">Expense</span><span class="ps-tab">Savings</span></div>
+                <div class="ps-stats">
+                  <div class="ps-stat"><div class="ps-stat-label">Today</div><div class="ps-stat-val amber">$42</div></div>
+                  <div class="ps-stat"><div class="ps-stat-label">This Month</div><div class="ps-stat-val">$1,180</div></div>
+                </div>
+                <div class="ps-list">
+                  <div class="ps-row"><div class="ps-row-left"><span class="ps-dot" style="background:#FF7A29"></span><div><div class="ps-row-cat">Food &amp; Dining</div><div class="ps-row-meta">Today · Hawker lunch</div></div></div><span class="ps-row-amt neg">-$8.50</span></div>
+                  <div class="ps-row"><div class="ps-row-left"><span class="ps-dot" style="background:#49D3C7"></span><div><div class="ps-row-cat">Transportation</div><div class="ps-row-meta">Today · Grab ride</div></div></div><span class="ps-row-amt neg">-$14.20</span></div>
+                  <div class="ps-row"><div class="ps-row-left"><span class="ps-dot" style="background:#9EE6A0"></span><div><div class="ps-row-cat">Bills &amp; Subscriptions</div><div class="ps-row-meta">Yesterday</div></div></div><span class="ps-row-amt neg">-$19.30</span></div>
+                </div>
+                <div class="ps-fab">+</div>
+              </div>
+            </div>
+            <div class="phone-caption">Home — dual-pane summary</div>
+          </div>
+
+          <div>
+            <div class="phone-mock">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <div class="ps-bar"><span>9:41</span><span>●●●●</span></div>
+                <div class="ps-header"><span class="ps-title">Gmail Sync</span></div>
+                <div class="ps-gmail-banner"><span>🔗 Connected to Gmail (read-only) — scanning for DBS Bank alerts…</span></div>
+                <div class="ps-list">
+                  <div class="ps-row"><div class="ps-row-left"><span class="ps-dot" style="background:#FF7A29"></span><div><div class="ps-row-cat">DBS Alert · Parsed</div><div class="ps-row-meta">Gemini AI: Shopping</div></div></div><span class="ps-row-amt neg">-$56.00</span></div>
+                  <div class="ps-row"><div class="ps-row-left"><span class="ps-dot" style="background:#7AE0A0"></span><div><div class="ps-row-cat">DBS Alert · Parsed</div><div class="ps-row-meta">Gemini AI: Salary</div></div></div><span class="ps-row-amt pos">+$3,200.00</span></div>
+                  <div class="ps-row"><div class="ps-row-left"><span class="ps-dot" style="background:#49D3C7"></span><div><div class="ps-row-cat">DBS Alert · Parsing…</div><div class="ps-row-meta">Awaiting classification</div></div></div><span class="ps-row-amt" style="color:var(--ink-faint)">···</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="phone-caption">Gmail → Gemini auto-sync</div>
+          </div>
+        </div>
+
+        <div class="app-subhead">Tech Stack</div>
+        <div class="tech-tags">
+          <span>React 19</span><span>TypeScript</span><span>Vite</span><span>Tailwind CSS 4</span>
+          <span>Firebase</span><span>Gemini API</span><span>Gmail OAuth</span><span>Recharts</span>
+          <span>SheetJS (xlsx)</span><span>Express</span>
+        </div>
+
+        <div class="app-subhead">Data Model — src/types.ts</div>
+        <div class="code-block">
+          <div class="code-block-header"><span>src/types.ts</span><span>TypeScript</span></div>
+          <pre><code><span class="tok-kw">export type</span> TransactionType = <span class="tok-str">'saving'</span> | <span class="tok-str">'expense'</span>;
+
+<span class="tok-kw">export interface</span> <span class="tok-type">Transaction</span> {
+  id: <span class="tok-type">string</span>;
+  type: TransactionType;
+  amount: <span class="tok-type">number</span>;
+  category: <span class="tok-type">string</span>;
+  description: <span class="tok-type">string</span>;
+  date: <span class="tok-type">string</span>; <span class="tok-com">// YYYY-MM-DD local format</span>
+  createdAt: <span class="tok-type">string</span>; <span class="tok-com">// ISO format Timestamp</span>
+}
+
+<span class="tok-kw">export interface</span> <span class="tok-type">SummaryStats</span> {
+  today: <span class="tok-type">number</span>;
+  thisWeek: <span class="tok-type">number</span>;
+  thisMonth: <span class="tok-type">number</span>;
+  total: <span class="tok-type">number</span>;
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- APP 2: Invest / Savings Tracker -->
+      <div class="app-card">
+        <div class="app-head">
+          <div class="app-head-left">
+            <div class="app-icon">📈</div>
+            <div>
+              <div class="app-name">Invest Tracker</div>
+              <div class="app-tagline">Portfolio &amp; savings-scheme tracker · offline-first</div>
+            </div>
+          </div>
+          <a class="app-link" href="https://github.com/prabinkishores/Invest-tracker" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+
+        <p class="app-desc">A mobile-first tracker for logging investment payments, managing multiple savings schemes, and monitoring portfolio growth over time — built to handle the mixed basket of instruments I actually use: recurring deposits, SSY, stocks, mutual funds, and chit funds, all in one place, with full offline persistence.</p>
+
+        <div class="app-subhead">How I use it</div>
+        <ul class="feature-list">
+          <li>Set up a "scheme" for each instrument — RD, SSY, Stocks, MF, Chit, or Custom</li>
+          <li>Record the monthly SIP amount and the platform/provider for each scheme</li>
+          <li>Log a monthly entry per scheme — amount invested vs. current value</li>
+          <li>See return % calculated automatically per entry and per scheme</li>
+          <li>Add notes and payment mode (bank transfer, UPI, auto-debit, etc.) per entry</li>
+          <li>Review portfolio P&amp;L across every scheme in one consolidated view</li>
+          <li>Keep logging and reviewing fully offline — data persists locally on-device</li>
+          <li>Sync across devices via Firebase when back online</li>
+        </ul>
+
+        <div class="app-subhead">App Preview — Mobile</div>
+        <div class="phone-row">
+          <div>
+            <div class="phone-mock">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <div class="ps-bar"><span>9:41</span><span>●●●●</span></div>
+                <div class="ps-header"><span class="ps-title">Portfolio</span><span class="ps-toggle"></span></div>
+                <div class="ps-stats">
+                  <div class="ps-stat"><div class="ps-stat-label">Invested</div><div class="ps-stat-val">$18,400</div></div>
+                  <div class="ps-stat"><div class="ps-stat-label">Current Value</div><div class="ps-stat-val cyan">$21,150</div></div>
+                </div>
+                <div class="ps-list" style="overflow-y:hidden;">
+                  <div class="ps-scheme-card">
+                    <div class="ps-scheme-top"><span class="ps-scheme-name">HDFC Flexicap MF</span><span class="ps-scheme-type">MF</span></div>
+                    <div class="ps-scheme-bar"><div class="ps-scheme-bar-fill" style="width:78%"></div></div>
+                    <div class="ps-scheme-nums"><span>SIP <b>$120/mo</b></span><span style="color:#7AE0A0">+14.2%</span></div>
+                  </div>
+                  <div class="ps-scheme-card">
+                    <div class="ps-scheme-top"><span class="ps-scheme-name">SSY — Daughter</span><span class="ps-scheme-type">SSY</span></div>
+                    <div class="ps-scheme-bar"><div class="ps-scheme-bar-fill" style="width:52%"></div></div>
+                    <div class="ps-scheme-nums"><span>SIP <b>$80/mo</b></span><span style="color:#7AE0A0">+7.6%</span></div>
+                  </div>
+                  <div class="ps-scheme-card">
+                    <div class="ps-scheme-top"><span class="ps-scheme-name">Axis Bank Stock</span><span class="ps-scheme-type">Stocks</span></div>
+                    <div class="ps-scheme-bar"><div class="ps-scheme-bar-fill" style="width:34%"></div></div>
+                    <div class="ps-scheme-nums"><span>SIP <b>$60/mo</b></span><span style="color:#FF7A7A">-2.1%</span></div>
+                  </div>
+                </div>
+                <div class="ps-fab">+</div>
+              </div>
+            </div>
+            <div class="phone-caption">Portfolio overview</div>
+          </div>
+
+          <div>
+            <div class="phone-mock">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <div class="ps-bar"><span>9:41</span><span>●●●●</span></div>
+                <div class="ps-header"><span class="ps-title">Add Entry</span></div>
+                <div class="ps-tabs"><span class="ps-tab active">RD</span><span class="ps-tab">SSY</span><span class="ps-tab">Chit</span></div>
+                <div class="ps-list">
+                  <div class="ps-row"><div class="ps-row-left"><div><div class="ps-row-cat">Month</div><div class="ps-row-meta">Jul 2026</div></div></div></div>
+                  <div class="ps-row"><div class="ps-row-left"><div><div class="ps-row-cat">Amount Invested</div><div class="ps-row-meta">Bank transfer</div></div></div><span class="ps-row-amt">$120.00</span></div>
+                  <div class="ps-row"><div class="ps-row-left"><div><div class="ps-row-cat">Current Value</div><div class="ps-row-meta">Auto-fetched</div></div></div><span class="ps-row-amt pos">$137.00</span></div>
+                  <div class="ps-row"><div class="ps-row-left"><div><div class="ps-row-cat">Return</div><div class="ps-row-meta">This entry</div></div></div><span class="ps-row-amt pos">+14.2%</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="phone-caption">Log a monthly entry</div>
+          </div>
+        </div>
+
+        <div class="app-subhead">Tech Stack</div>
+        <div class="tech-tags">
+          <span>React 19</span><span>TypeScript</span><span>Vite</span><span>Tailwind CSS 4</span>
+          <span>Firebase</span><span>Gemini API</span><span>Framer Motion</span><span>Lucide Icons</span>
+        </div>
+
+        <div class="app-subhead">Data Model — src/types.ts</div>
+        <div class="code-block">
+          <div class="code-block-header"><span>src/types.ts</span><span>TypeScript</span></div>
+          <pre><code><span class="tok-kw">export type</span> SchemeType = <span class="tok-str">'RD'</span> | <span class="tok-str">'SSY'</span> | <span class="tok-str">'Stocks'</span> | <span class="tok-str">'MF'</span> | <span class="tok-str">'Chit'</span> | <span class="tok-str">'Custom'</span>;
+
+<span class="tok-kw">export interface</span> <span class="tok-type">Scheme</span> {
+  id: <span class="tok-type">string</span>;
+  name: <span class="tok-type">string</span>;
+  type: SchemeType;
+  sip: <span class="tok-type">number</span>;
+  plat: <span class="tok-type">string</span>;
+  userId?: <span class="tok-type">string</span>;
+  createdAt?: <span class="tok-type">string</span>;
+}
+
+<span class="tok-kw">export interface</span> <span class="tok-type">Entry</span> {
+  id: <span class="tok-type">string</span>;
+  month: <span class="tok-type">string</span>;          <span class="tok-com">// YYYY-MM</span>
+  date: <span class="tok-type">string</span>;           <span class="tok-com">// YYYY-MM-DD</span>
+  schemeId: <span class="tok-type">string</span>;
+  schemeName: <span class="tok-type">string</span>;
+  schemeType: SchemeType;
+  amount: <span class="tok-type">number</span>;
+  currentValue: <span class="tok-type">number</span>;
+  returnPct?: <span class="tok-type">number</span>;
+  mode: <span class="tok-type">string</span>;
+  notes: <span class="tok-type">string</span>;
+  userId?: <span class="tok-type">string</span>;
+  createdAt: <span class="tok-type">string</span>;      <span class="tok-com">// ISO timestamp</span>
+}</code></pre>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 PRABIN SUNDARAM</span>
+    <span>CRAFTED WITH SYSTEMS THINKING</span>
+  </div>
+</footer>
+</body>
+</html>

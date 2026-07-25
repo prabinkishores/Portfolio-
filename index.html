@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prabin Kishores — Logistics &amp; Automation</title>
+<meta name="description" content="Prabin Kishores — Warehouse &amp; Logistics Professional, n8n Automation Builder, Content Creator.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1319;
+    --panel:#171E27;
+    --panel-2:#1D2530;
+    --line:#2B3543;
+    --line-soft:#232B36;
+    --ink:#ECEFF3;
+    --ink-dim:#9AA5B4;
+    --ink-faint:#5F6B7A;
+    --amber:#FF7A29;
+    --amber-dim:#B85A1F;
+    --cyan:#49D3C7;
+    --paper:#E7E2D6;
+    --radius:2px;
+    --display: 'Big Shoulders Display', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.6;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
+    background-size:22px 22px;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+  ::selection{background:var(--amber);color:#12100C;}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(15,19,25,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-inner{
+    max-width:1120px;margin:0 auto;padding:0 28px;
+    height:64px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{
+    font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:0.12em;
+    display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;
+  }
+  .brand .dot{width:8px;height:8px;background:var(--amber);border-radius:50%;box-shadow:0 0 0 3px rgba(255,122,41,0.18);}
+  nav ul{list-style:none;display:flex;gap:8px;}
+  nav a{
+    text-decoration:none;color:var(--ink-dim);font-size:13px;font-family:var(--mono);
+    letter-spacing:0.06em;padding:8px 4px;border-radius:var(--radius);transition:color .15s ease, background .15s ease;
+  }
+  nav a:hover{color:var(--ink);background:var(--panel-2);}
+  .navlist{display:flex;align-items:center;gap:40px;}
+  #themeToggle{
+    margin-left:8px;width:38px;height:24px;border-radius:20px;background:var(--panel-2);
+    border:1px solid var(--line);position:relative;cursor:pointer;flex-shrink:0;
+  }
+  #themeToggle::after{
+    content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+    background:var(--cyan);transition:transform .2s ease;
+  }
+  body.light-mode #themeToggle::after{transform:translateX(14px);background:var(--amber);}
+  .navToggle{display:none;background:none;border:1px solid var(--line);color:var(--ink);width:36px;height:36px;border-radius:var(--radius);cursor:pointer;}
+
+  /* ---------- Hero / manifest ---------- */
+  .hero{padding:150px 0 90px;position:relative;overflow:hidden;}
+  .manifest-card{
+    border:1px solid var(--line);background:linear-gradient(180deg, var(--panel) 0%, var(--bg) 100%);
+    border-radius:4px;position:relative;padding:0;
+  }
+  .manifest-topline{
+    display:flex;justify-content:flex-end;align-items:center;
+    padding:14px 24px;border-bottom:1px dashed var(--line);
+    font-family:var(--mono);font-size:11px;letter-spacing:0.14em;color:var(--ink-faint);text-transform:uppercase;
+  }
+  .manifest-topline span.live{color:var(--cyan);}
+  .manifest-topline .pulse{display:inline-block;width:6px;height:6px;background:var(--cyan);border-radius:50%;margin-right:6px;animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+  .manifest-body{display:grid;grid-template-columns:auto 1fr;gap:36px;padding:52px 40px 44px;align-items:center;}
+
+  .photo-frame{
+    position:relative;width:268px;height:318px;flex-shrink:0;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .brush-defs{position:absolute;width:0;height:0;overflow:hidden;}
+
+  .paint-photo{
+    position:relative;width:258px;height:292px;
+  }
+  .paint-photo img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    clip-path:url(#paintBlob);
+    filter:saturate(1.08) contrast(1.06) brightness(0.98);
+  }
+  .paint-photo::before{
+    content:'';position:absolute;inset:-12px;z-index:-1;
+    background:linear-gradient(150deg, var(--amber) 10%, #E9A24B 40%, var(--cyan) 85%);
+    clip-path:url(#paintBlob);
+    opacity:.95;
+  }
+  .paint-outline{
+    position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;
+  }
+  .paint-outline path{
+    fill:none;stroke:url(#paintStrokeGrad);stroke-width:0.028;
+    stroke-linecap:round;stroke-linejoin:round;
+    opacity:.9;
+  }
+
+  /* loose brush strokes bleeding around the outside of the frame */
+  .brush-outside{position:absolute;pointer-events:none;mix-blend-mode:screen;}
+  .brush-1{
+    top:-35px;left:-46px;width:176px;height:122px;
+    background:linear-gradient(120deg, var(--amber), transparent 75%);
+    clip-path:polygon(8% 45%,22% 15%,48% 2%,72% 12%,96% 8%,88% 38%,64% 42%,52% 68%,30% 78%,10% 66%);
+    opacity:.55;filter:blur(2px);transform:rotate(-8deg);
+  }
+  .brush-2{
+    bottom:-40px;right:-40px;width:162px;height:130px;
+    background:linear-gradient(300deg, var(--cyan), transparent 78%);
+    clip-path:polygon(10% 30%,30% 6%,58% 0%,92% 18%,100% 46%,80% 60%,74% 88%,46% 100%,18% 86%,4% 58%);
+    opacity:.5;filter:blur(2px);transform:rotate(10deg);
+  }
+  .brush-3{
+    top:38%;right:-30px;width:80px;height:35px;
+    background:linear-gradient(90deg, transparent, var(--amber) 60%, transparent);
+    clip-path:polygon(0% 50%,20% 10%,55% 0%,100% 35%,88% 70%,50% 100%,15% 85%);
+    opacity:.6;filter:blur(1.5px);transform:rotate(-4deg);
+  }
+
+  .paint-caption{
+    margin-top:16px;position:relative;
+    font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:0.02em;
+    color:var(--ink);text-transform:none;
+  }
+  .paint-caption::after{
+    content:'';display:block;height:5px;width:104%;margin:2px -2% 0;
+    background:linear-gradient(90deg, var(--amber), var(--cyan));
+    clip-path:polygon(0% 35%,10% 15%,25% 40%,40% 10%,55% 45%,70% 5%,85% 35%,100% 15%,100% 65%,85% 85%,70% 55%,55% 90%,40% 60%,25% 95%,10% 65%,0% 85%);
+    opacity:.85;
+  }
+  @media (max-width:860px){
+    .photo-frame{width:210px;height:auto;}
+    .paint-photo{width:200px;height:232px;}
+  }
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);margin-bottom:18px;display:block;
+  }
+  h1.stamp{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:clamp(52px, 9vw, 108px);
+    line-height:0.88;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  h1.stamp .accent{color:var(--amber);}
+  h1.stamp{position:relative;}
+  .shimmer-bar{
+    height:3px;width:120px;margin-top:20px;border-radius:2px;
+    background:linear-gradient(90deg, var(--amber), var(--cyan), var(--amber));
+    background-size:200% 100%;animation:shimmer 3.2s linear infinite;
+  }
+  @keyframes shimmer{0%{background-position:0% 0;}100%{background-position:200% 0;}}
+  .id-card{transition:transform .12s ease-out, box-shadow .18s ease;}
+  .role-line{
+    font-family:var(--mono);font-size:15px;color:var(--cyan);margin-top:18px;letter-spacing:0.02em;
+  }
+  .tagline{color:var(--ink-dim);max-width:520px;margin-top:14px;font-size:15px;}
+
+  .stampbox{
+    border:2px solid var(--amber);color:var(--amber);
+    font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:0.14em;
+    padding:12px 16px;transform:rotate(-6deg);border-radius:3px;white-space:nowrap;
+    justify-self:end;
+  }
+
+  .route{
+    display:flex;align-items:center;gap:0;padding:0 40px 46px;flex-wrap:wrap;
+  }
+  .route-step{font-family:var(--mono);font-size:12px;color:var(--ink-dim);display:flex;align-items:center;gap:10px;}
+  .route-step b{color:var(--ink);font-weight:600;}
+  .route-line{flex:1;min-width:36px;height:1px;background:repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px);margin:0 14px;position:relative;}
+  .route-line::after{content:'▸';position:absolute;right:-2px;top:-9px;color:var(--ink-faint);font-size:12px;}
+
+  .hero-actions{display:flex;gap:14px;padding:0 40px 40px;flex-wrap:wrap;justify-content:center;}
+  .btn{
+    font-family:var(--mono);font-size:13px;letter-spacing:0.06em;text-decoration:none;
+    padding:13px 22px;border-radius:2px;display:inline-flex;align-items:center;gap:8px;transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-primary{background:var(--amber);color:#161006;font-weight:700;}
+  .btn-primary:hover{transform:translateY(-2px);background:#ff8a45;}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px);}
+
+  .social-strip{
+    display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;
+    border-top:1px dashed var(--line);padding:22px 10px;
+  }
+  .social-strip a{
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line);border-radius:50%;color:var(--ink-dim);
+    text-decoration:none;transition:background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .social-strip a svg{width:20px;height:20px;fill:currentColor;}
+  .social-strip a:hover{background:var(--panel-2);color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px);}
+
+  section{padding:96px 0;}
+  .section-head{margin-bottom:48px;text-align:center;}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:10px;}
+  h2{font-family:var(--display);font-weight:800;font-size:clamp(34px,5vw,52px);text-transform:uppercase;letter-spacing:0.01em;line-height:0.95;}
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid;grid-template-columns:220px 1fr;gap:52px;align-items:start;}
+  .id-card{
+    border:1px solid var(--line);background:var(--panel);border-radius:4px;overflow:hidden;
+  }
+  .id-photo{aspect-ratio:1/1;overflow:hidden;border-bottom:1px dashed var(--line);}
+  .id-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(35%) contrast(1.05);}
+  .id-meta{padding:14px 16px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:0.08em;}
+  .id-meta div{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--line-soft);}
+  .id-meta div:last-child{border-bottom:none;}
+  .id-meta span:last-child{color:var(--ink-dim);}
+  .barcode{height:34px;margin:0 16px 16px;background:repeating-linear-gradient(90deg, var(--ink-faint) 0 2px, transparent 2px 5px, var(--ink-faint) 5px 6px, transparent 6px 10px);opacity:.55;}
+
+  .about-text p{color:var(--ink-dim);margin-bottom:16px;font-size:15.5px;max-width:640px;}
+  .about-text strong{color:var(--ink);font-weight:600;}
+  .stat-row{display:flex;gap:36px;margin-top:32px;flex-wrap:wrap;}
+  .stat b{display:block;font-family:var(--display);font-size:38px;color:var(--amber);line-height:1;}
+  .stat span{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:0.08em;text-transform:uppercase;}
+
+  /* ---------- Skills (boxes) ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .skill-crate{
+    border:1px solid var(--line);background:var(--panel);border-radius:3px;padding:24px;position:relative;
+    overflow:hidden;transition:transform .12s ease-out, border-color .18s ease, background .18s ease, box-shadow .25s ease;
+  }
+  .skill-crate:hover{border-color:var(--amber-dim);background:var(--panel-2);box-shadow:0 24px 48px -18px rgba(0,0,0,0.55);}
+  .skill-crate::before,.skill-crate::after{content:'';position:absolute;width:14px;height:14px;border:2px solid var(--line);transition:border-color .18s ease;}
+  .skill-crate::before{top:8px;left:8px;border-right:none;border-bottom:none;}
+  .skill-crate::after{bottom:8px;right:8px;border-left:none;border-top:none;}
+  .skill-crate:hover::before,.skill-crate:hover::after{border-color:var(--amber);}
+  .skill-crate-id{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:0.1em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .skill-crate-id .ping{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(73,211,199,0.5);animation:crate-ping 2.4s infinite;}
+  @keyframes crate-ping{0%{box-shadow:0 0 0 0 rgba(73,211,199,0.45);}70%{box-shadow:0 0 0 8px rgba(73,211,199,0);}100%{box-shadow:0 0 0 0 rgba(73,211,199,0);}}
+  .skill-crate h3{font-family:var(--body);font-weight:700;font-size:18px;margin-bottom:10px;color:var(--ink);transition:color .18s ease;}
+  .skill-crate:hover h3{color:var(--amber);}
+  .skill-crate p{font-size:13.5px;color:var(--ink-dim);margin-bottom:18px;min-height:72px;}
+  .skill-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .skill-tags span{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);border:1px solid var(--line);padding:4px 8px;border-radius:2px;letter-spacing:0.04em;transition:border-color .18s ease,color .18s ease;}
+  .skill-crate:hover .skill-tags span{border-color:var(--cyan);color:var(--cyan);}
+  .line-more{
+    display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-family:var(--mono);font-size:12.5px;letter-spacing:0.04em;
+    color:var(--cyan);text-decoration:none;white-space:nowrap;border-bottom:1px solid transparent;
+    transition:color .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .line-more:hover{color:var(--amber);border-color:var(--amber);transform:translateX(3px);}
+  .skill-crate-static{
+    font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);margin-top:6px;
+  }
+  @keyframes crate-sheen{0%{transform:translateX(-120%) skewX(-12deg);}100%{transform:translateX(220%) skewX(-12deg);}}
+  .skill-crate .sheen{
+    position:absolute;top:0;left:0;width:40%;height:100%;pointer-events:none;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,0.06), transparent);
+    opacity:0;
+  }
+  .skill-crate:hover .sheen{opacity:1;animation:crate-sheen 1s ease;}
+
+  /* ---------- Logistics full detail (in-page) ---------- */
+  .logistics-detail{
+    border:1px solid var(--line);background:var(--panel);border-radius:4px;
+    padding:44px 48px;margin-bottom:60px;position:relative;overflow:hidden;
+  }
+  .logistics-detail::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg, var(--amber), var(--cyan), var(--amber));
+    background-size:200% 100%;animation:shimmer 3.2s linear infinite;
+  }
+  .logistics-head{margin-bottom:36px;}
+  .logistics-head h3{
+    font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,40px);
+    text-transform:uppercase;color:var(--ink);margin:14px 0 12px;line-height:1;
+  }
+  .logistics-lead{color:var(--ink-dim);font-size:15px;max-width:720px;}
+  .block{margin-bottom:40px;}
+  .block:last-child{margin-bottom:0;}
+  .block h4{
+    font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:0.02em;
+    text-transform:uppercase;color:var(--ink);margin-bottom:18px;padding-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  .block > p{color:var(--ink-dim);font-size:14.5px;max-width:740px;}
+  .entry{border-left:2px solid var(--line);padding:4px 0 4px 22px;margin-bottom:26px;position:relative;transition:border-color .18s ease;}
+  .entry:last-child{margin-bottom:0;}
+  .entry:hover{border-color:var(--cyan);}
+  .entry::before{
+    content:'';position:absolute;left:-5px;top:8px;width:8px;height:8px;border-radius:50%;
+    background:var(--cyan);box-shadow:0 0 0 3px rgba(73,211,199,0.15);
+  }
+  .entry-role{font-weight:700;font-size:16px;color:var(--ink);}
+  .entry-meta{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:0.04em;margin:4px 0 10px;}
+  .entry ul{padding-left:18px;color:var(--ink-dim);font-size:14px;}
+  .entry ul li{margin-bottom:7px;}
+  .skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 28px;}
+  .skill-grid div{font-size:13.5px;color:var(--ink-dim);}
+  .skill-grid div strong{color:var(--ink);}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag-row span{
+    font-family:var(--mono);font-size:11px;color:var(--ink-dim);border:1px solid var(--line);
+    padding:6px 12px;border-radius:2px;letter-spacing:0.03em;transition:border-color .18s ease,color .18s ease;
+  }
+  .tag-row span:hover{border-color:var(--amber);color:var(--amber);}
+  @media (max-width:640px){
+    .logistics-detail{padding:30px 22px;}
+    .skill-grid{grid-template-columns:1fr;}
+  }
+
+  footer{border-top:1px solid var(--line-soft);padding:30px 0;}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:0.06em;flex-wrap:wrap;gap:10px;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.visible{opacity:1;transform:none;}
+
+  .hero{perspective:1400px;}
+
+  /* ---------- Tilt interaction (crates, id card, manifest) ---------- */
+  .tilt{transform-style:preserve-3d;will-change:transform;position:relative;}
+  .tilt3d{transform-style:preserve-3d;will-change:transform;transition:transform .12s ease-out;}  .tilt::before{
+    content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(73,211,199,0.14), transparent 60%);
+    opacity:0;transition:opacity .3s ease;z-index:1;
+  }
+  .tilt:hover::before{opacity:1;}
+  .tilt > *{position:relative;z-index:0;}
+  .id-card.tilt3d:hover{box-shadow:0 24px 48px -18px rgba(0,0,0,0.55);}
+  .manifest-card{transform-style:preserve-3d;will-change:transform;transition:transform .15s ease-out;}
+
+  /* ---------- Light mode override ---------- */
+  body.light-mode{
+    --bg:#F3F0E8;--panel:#FFFFFF;--panel-2:#ECE7DA;--line:#D8D2C2;--line-soft:#E4DFD0;
+    --ink:#181511;--ink-dim:#55503F;--ink-faint:#8B8471;--paper:#0F1319;
+  }
+  body.light-mode header{background:rgba(243,240,232,0.88);}
+  body.light-mode .stampbox{color:var(--amber-dim);border-color:var(--amber-dim);}
+
+  @media (max-width:860px){
+    .about-grid{grid-template-columns:1fr;}
+    .id-card{max-width:220px;}
+    .skills-grid{grid-template-columns:1fr 1fr;}
+    .manifest-body{grid-template-columns:1fr;}
+    .stampbox{justify-self:start;}
+  }
+  @media (max-width:640px){
+    nav ul.navlist{position:fixed;top:64px;left:0;right:0;background:var(--bg);flex-direction:column;border-bottom:1px solid var(--line);padding:10px 20px 20px;display:none;}
+    nav ul.navlist.open{display:flex;}
+    .navToggle{display:block;}
+    .skills-grid{grid-template-columns:1fr;}
+    .social-strip a{min-width:100px;}
+    .route{padding-bottom:30px;}
+  }
+</style>
+</head>
+<body class="light-mode">
+
+<header>
+  <div class="nav-inner">
+    <a href="#" class="brand"><span class="dot"></span></a>
+    <button class="navToggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="navlist" id="navList">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="mailto:prabinkishores@gmail.com">Contact</a></li>
+    </ul>
+    <button id="themeToggle" aria-label="Toggle light and dark mode"></button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="manifest-card reveal" id="manifestCard">
+        <div class="manifest-topline">
+          <span>PORTFOLIO</span>
+        </div>
+        <div class="manifest-body">
+          <div class="photo-frame">
+            <svg class="brush-defs" aria-hidden="true">
+              <defs>
+                <clipPath id="paintBlob" clipPathUnits="objectBoundingBox">
+                  <path d="M0.52,0.01 C0.7,0.0 0.88,0.06 0.95,0.22 C1.02,0.36 0.93,0.47 0.97,0.62 C1.01,0.78 0.9,0.88 0.75,0.94 C0.62,0.99 0.5,0.94 0.36,0.99 C0.2,1.04 0.04,0.93 0.02,0.76 C0.0,0.61 0.09,0.53 0.05,0.38 C0.01,0.24 0.1,0.09 0.26,0.04 C0.35,0.01 0.44,0.03 0.52,0.01 Z"/>
+                </clipPath>
+                <linearGradient id="paintStrokeGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FF7A29"/>
+                  <stop offset="100%" stop-color="#49D3C7"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="brush-outside brush-1"></div>
+            <div class="brush-outside brush-2"></div>
+            <div class="brush-outside brush-3"></div>
+            <div class="paint-photo tilt3d">
+              <img src="Image 01.png" alt="Prabin Kishores">
+              <svg class="paint-outline" viewBox="0 0 1 1" preserveAspectRatio="none">
+                <path d="M0.52,0.01 C0.7,0.0 0.88,0.06 0.95,0.22 C1.02,0.36 0.93,0.47 0.97,0.62 C1.01,0.78 0.9,0.88 0.75,0.94 C0.62,0.99 0.5,0.94 0.36,0.99 C0.2,1.04 0.04,0.93 0.02,0.76 C0.0,0.61 0.09,0.53 0.05,0.38 C0.01,0.24 0.1,0.09 0.26,0.04 C0.35,0.01 0.44,0.03 0.52,0.01 Z"/>
+              </svg>
+            </div>
+            <div class="paint-caption">Prabin Kishores</div>
+          </div>
+          <div>
+            <span class="eyebrow">Warehouse Floor → Automation Desk</span>
+            <h1 class="stamp">Pr<span class="accent">a</span>bin<br>sundaram</h1>
+            <div class="role-line"> Logistics &amp; Warehousing · AI Tool Explorer · Content Creator</div>
+            <div class="shimmer-bar" aria-hidden="true"></div>
+            <p class="tagline">My career began on the warehouse floor, where I learned the value of efficiency, accuracy, and teamwork. Today, I combine that hands-on experience with automation and software to build practical solutions that save time and reduce manual work.</p>
+          </div>
+        </div>
+        <div class="route">
+          <div class="route-step"><b>Floor Ops</b></div>
+          <div class="route-line"></div>
+          <div class="route-step"><b>Process Automation</b></div>
+          <div class="route-line"></div>
+          <div class="route-step"><b>Content &amp; Web</b></div>
+        </div>
+        <div class="hero-actions">
+          <a href="mailto:prabinkishores@gmail.com" class="btn btn-primary">Get in Touch ↗</a>
+        </div>
+        <div class="social-strip">
+          <a href="https://github.com/prabinkishores" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.11 3.06.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .3.2.66.79.55A10.51 10.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>
+          </a>
+          <a href="https://x.com/prabin_s22" target="_blank" rel="noopener" aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2H21l-6.55 7.49L22.2 22h-6.17l-4.83-6.32L5.62 22H2.85l7.01-8.01L1.8 2h6.32l4.37 5.78L18.24 2Zm-1.08 18.17h1.7L7.02 3.74H5.2l11.96 16.43Z"/></svg>
+          </a>
+          <a href="hhttps://www.linkedin.com/in/prabin-s-b52889236/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@DreamyStories-Tamil" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.19a3 3 0 0 0-2.11-2.13C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.39.56A3 3 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3 3 0 0 0 2.11 2.13c1.89.56 9.39.56 9.39.56s7.5 0 9.39-.56a3 3 0 0 0 2.11-2.13A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81ZM9.6 15.5v-7l6.27 3.5-6.27 3.5Z"/></svg>
+          </a>
+          <a href="https://instagram.com/prabinkishores" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.24 2.22.41.56.21.96.47 1.38.89.42.42.68.82.89 1.38.17.42.36 1.05.41 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.24 1.8-.41 2.22-.21.56-.47.96-.89 1.38-.42.42-.82.68-1.38.89-.42.17-1.05.36-2.22.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.24-2.22-.41-.56-.21-.96-.47-1.38-.89-.42-.42-.68-.82-.89-1.38-.17-.42-.36-1.05-.41-2.22C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.24-1.8.41-2.22.21-.56.47-.96.89-1.38.42-.42.82-.68 1.38-.89.42-.17 1.05-.36 2.22-.41C8.42 2.17 8.8 2.16 12 2.16Zm0-2.16C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.39C1.35 2.68.94 3.35.63 4.14c-.3.76-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.39 2.13.67.67 1.34 1.08 2.13 1.39.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.39.67-.67 1.08-1.34 1.39-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.39-2.13C21.32 1.35 20.65.94 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.4a1.44 1.44 0 1 1-1.44-1.44 1.44 1.44 0 0 1 1.44 1.44Z"/></svg>
+          </a>
+          <a href="https://facebook.com/prabinkishores" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.89v2.25h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07Z"/></svg>
+          </a>
+          <a href="mailto:prabinkishores@gmail.com" aria-label="Gmail">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 5.46v13.08A2.46 2.46 0 0 1 21.55 21h-2.6V11.03l-6.95 5.26-6.95-5.26V21H2.45A2.46 2.46 0 0 1 0 18.54V5.46A2.45 2.45 0 0 1 1.09 3.5l10.96 8.3 10.96-8.3A2.45 2.45 0 0 1 24 5.46Z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>About Me</h2>
+      </div>
+      <div class="about-grid reveal">
+        <div class="id-card tilt3d">
+          <div class="id-photo"><img src="Image 01.png" alt="Prabin Kishores"></div>
+          <div class="id-meta">
+            <div><span>ROLE</span><span>Warehouse Supervisor</span></div>
+            <div><span>Work Location</span><span>Singapore</span></div>
+            <div><span>FOCUS</span><span>Ops + Automation</span></div>
+          </div>
+          <div class="barcode"></div>
+        </div>
+        <div class="about-text">
+          <p>I'm a warehouse and logistics professional with <strong>10+ years of experience</strong> managing warehouse operations, container stuffing, import/export processes, inventory control, and team coordination. Working in fast-paced logistics has taught me to think in <strong>efficiency, process optimization, and problem-solving</strong>—principles that guide every solution I build</p>
+          <p>Outside of work, I'm passionate about building practical automation solutions using <strong>n8n</strong>, <strong>Google Apps Script</strong>, and <strong>HTML, CSS, & JavaScript</strong>. I develop workflow automations, expense trackers, inspection applications, and other productivity tools that eliminate repetitive tasks and improve operational efficiency.</p>
+          <p>I also create digital content in both <strong>Tamil</strong> and <strong>English</strong>, producing educational videos, automation tutorials, and cinematic storytelling that combine technology with creativity.</p>
+          <p>My goal is simple: to build reliable systems that save time, reduce manual effort, and solve real-world problems. I believe the best solutions—whether in a warehouse or in software—are the ones that work so seamlessly that people hardly notice them.</p>
+          <div class="stat-row">
+            <div class="stat"><b>10+</b><span>Years in Logistics</span></div>
+            <div class="stat"><b>3</b><span>Application Builds</span></div>
+            <div class="stat"><b>3</b><span>Youtube Content Channels</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+     
+        <h2>Skills &amp; Expertise</h2>
+      </div>
+
+      <div class="logistics-detail reveal">
+        <div class="logistics-head">
+          <div class="skill-crate-id"><span class="ping"></span>SKL–01</div>
+          <h3>Logistics &amp; Warehousing</h3>
+          <p class="logistics-lead">Supply chain optimization, inventory control, and shift &amp; team supervision across 8+ years in container operations and import/export documentation.</p>
+        </div>
+
+        <div class="block">
+          <h4>Professional Summary</h4>
+          <p>Logistics and warehouse operations professional with 8+ years of experience across container operations, inventory control, and shipping documentation for high-value energy and FMCG accounts in Singapore and Malaysia. Skilled in preparing and verifying import/export documentation and coordinating courier bookings and tracking with DHL and other carriers, with a zero-failed-record documentation history across internal and client audits. Experienced in leading multi-shift teams of up to 22 staff, liaising with carriers, freight forwarders, and 3PL providers, and conducting investigations into shipment discrepancies with formal QIR/SIR reporting.</p>
+        </div>
+
+        <div class="block">
+          <h4>Experience</h4>
+
+          <div class="entry">
+            <div class="entry-role">Warehouse Supervisor</div>
+            <div class="entry-meta">CWT Integrated Pte. Ltd. (ExxonMobil SBA Project) · Singapore · Jul 2022 – Present</div>
+            <ul>
+              <li>Prepare, verify, and file import/export shipping documentation — delivery orders, bills of lading, commercial invoices, packing lists, and arrival notices — for 60+ inbound containers per month, achieving a zero-failed-record outcome across internal and client documentation audits.</li>
+              <li>Coordinate courier and sample shipment bookings with DHL and other carriers for ExxonMobil global sample dispatch, tracking shipments end-to-end and following up on delays.</li>
+              <li>Liaise daily with carriers, freight forwarders, and internal teams to schedule and execute inbound/outbound container movements, maintaining 100% on-time dispatch with zero short-picks across entire tenure.</li>
+              <li>Investigate shipment discrepancies, delays, and customer complaints, producing formal Quality Incident Reports (QIR) and Safety Incident Reports (SIR) with root-cause analysis and corrective actions.</li>
+              <li>Lead a cross-shift team of up to 22 warehouse staff across a 2-floor, 26-bay facility, driving average daily throughput of 30 containers.</li>
+              <li>Maintain accurate daily, weekly, and monthly records using Accellos WMS and ISCM, ensuring full audit readiness.</li>
+              <li>Sustain 99%+ inventory accuracy through RFID/RF scanning and cycle audits; zero reportable WSH incidents across 3+ years of supervisory tenure.</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="entry-role">Warehouse Assistant (Acting Supervisor)</div>
+            <div class="entry-meta">CWT Integrated Pte. Ltd. (ExxonMobil SBA Project) · Singapore · Mar 2018 – Jun 2022</div>
+            <ul>
+              <li>Coordinated ExxonMobil global sample dispatch operations, preparing shipping documentation and courier bookings in full compliance with client specifications.</li>
+              <li>Deputised as Acting Supervisor, independently managing floor operations, shift handovers, team coordination, and throughput targets during supervisor absences.</li>
+              <li>Processed inbound and outbound container shipments, including manual and electronic inventory counting via RF and RFID scanning, with zero discrepancies.</li>
+              <li>Operated forklifts, reach trucks, VNA machines, scissor lifts, and power pallet trucks with zero equipment incidents over 4 years.</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="entry-role">Warehouse Coordinator — Aerosol &amp; Non-Aerosol Division</div>
+            <div class="entry-meta">DHL Supply Chain Sdn. Bhd. · Malaysia · Dec 2016 – Nov 2017</div>
+            <ul>
+              <li>Managed the full warehouse cycle — receiving, inventory management, material issuance, and outbound documentation — for aerosol and non-aerosol FMCG lines under strict hazardous goods protocols.</li>
+              <li>Achieved a 12-month accident-free record with zero short-picks or over-picks on all outbound shipments throughout tenure.</li>
+            </ul>
+          </div>
+
+          <div class="entry">
+            <div class="entry-role">Warehouse Quality Control Officer</div>
+            <div class="entry-meta">British American Tobacco Sdn. Bhd. · Malaysia · Jan 2016 – Dec 2016</div>
+            <ul>
+              <li>Managed quality control of high-value tobacco products with zero instances of damaged goods dispatched; conducted weekly inspection cycles to identify and quarantine non-conforming stock.</li>
+              <li>Maintained a safe, clean, and audit-ready warehouse environment in full compliance with operational and safety standards.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="block">
+          <h4>Skills &amp; Systems</h4>
+          <div class="skill-grid">
+            <div><strong>Documentation:</strong> Delivery Orders, Bills of Lading, Commercial Invoices, Packing Lists, Arrival Notices, Incoterms Basics</div>
+            <div><strong>Courier &amp; Carrier:</strong> DHL Booking &amp; Tracking, Freight Forwarder Coordination, 3PL Operations</div>
+            <div><strong>Investigation &amp; Audit:</strong> QIR / SIR Report Writing, Root-Cause Analysis, Audit-Ready Recordkeeping</div>
+            <div><strong>WMS &amp; Systems:</strong> Accellos WMS, ISCM, RF Scanning, RFID, Manual Inventory Control</div>
+            <div><strong>Equipment:</strong> Forklift, Reach Truck, VNA, Scissor Lift, Power Pallet Truck</div>
+            <div><strong>Leadership:</strong> Multi-Shift Team Management (up to 22 staff), SOP Development, Safety Audits, KPI Tracking</div>
+          </div>
+        </div>
+
+        <div class="block">
+          <h4>Certifications &amp; Education</h4>
+          <div class="tag-row">
+            <span>Forklift Operator Licence — Wong Fong Academy, SG</span>
+            <span>Work at Height Certificate — Absolute Kinetics, SG</span>
+            <span>Scissor Lift Operator Certificate — Aver Asia, SG</span>
+            <span>WSH Control Measures (Level 4)</span>
+            <span>Forklift Operator Licence — UMW Holdings, Malaysia</span>
+            <span>Diploma in Civil Engineering — BWDA Polytechnic, Tamil Nadu (2012–2015)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head reveal">
+       
+        <h2>More Skills &amp; Expertise</h2>
+      </div>
+      <div class="skills-grid reveal" id="skillList">
+        <div class="skill-crate tilt">
+          <span class="sheen"></span>
+          <div class="skill-crate-id"><span class="ping"></span>SKL–02</div>
+          <h3>Blog &amp; Content Writing</h3>
+          <p>Technical writing, tutorials, and long-form storytelling — building an audience in both Tamil and English through clear, structured, and consistent writing.</p>
+          <div class="skill-tags"><span>Technical Writing</span><span>Tutorials</span><span>Tamil &amp; English</span></div>
+          <a class="line-more" href="blog-content-writing.html">Click here for more →</a>
+        </div>
+        <div class="skill-crate tilt">
+          <span class="sheen"></span>
+          <div class="skill-crate-id"><span class="ping"></span>SKL–03</div>
+          <h3>Frontend Build</h3>
+          <p>Semantic HTML, CSS, and responsive layouts, plus lightweight web apps built on Google Apps Script for real operational needs.</p>
+          <div class="skill-tags"><span>HTML/CSS</span><span>Responsive Design</span><span>Apps Script</span></div>
+          <a class="line-more" href="frontend-build.html">Click here for more →</a>
+        </div>
+        <div class="skill-crate tilt">
+          <span class="sheen"></span>
+          <div class="skill-crate-id"><span class="ping"></span>SKL–04</div>
+          <h3>YouTube &amp; Video Production</h3>
+          <p>End-to-end video production — scripting, editing, thumbnail design, and channel strategy for a growing Tamil-language storytelling channel.</p>
+          <div class="skill-tags"><span>Scripting</span><span>Editing</span><span>Channel Strategy</span></div>
+          <a class="line-more" href="youtube-video-production.html">Click here for more →</a>
+        </div>
+        <div class="skill-crate tilt">
+          <span class="sheen"></span>
+          <div class="skill-crate-id"><span class="ping"></span>SKL–05</div>
+          <h3>Applied AI</h3>
+          <p>Hands-on with AI tools and APIs across writing, research, design, and voice/video production — turning prompt design into real production workflows.</p>
+          <div class="skill-tags"><span>AI Tools</span><span>Prompt Design</span><span>APIs</span></div>
+          <a class="line-more" href="applied-ai.html">Click here for more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>©2024 PRABIN KISHORES</span>
+    <span>Copy Right Own by Prabin</span>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle (default: light/day mode; dark only after user switches)
+  const themeToggle = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.body.classList.remove('light-mode');
+  } else {
+    document.body.classList.add('light-mode');
+  }
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  });
+
+  // Mobile nav
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  navToggle.addEventListener('click', () => navList.classList.toggle('open'));
+  navList.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navList.classList.remove('open')));
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el => io.observe(el));
+
+  // 3D tilt interaction for cards
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion){
+    document.querySelectorAll('.tilt, .tilt3d').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        const rx = (py - 0.5) * -10;
+        const ry = (px - 0.5) * 10;
+        card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+        card.style.setProperty('--mx', (px*100) + '%');
+        card.style.setProperty('--my', (py*100) + '%');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(700px) rotateX(0) rotateY(0) translateZ(0)';
+      });
+    });
+
+    // Gentle whole-hero-card tilt following cursor
+    const manifestCard = document.getElementById('manifestCard');
+    const hero = document.querySelector('.hero');
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      const rx = (py - 0.5) * -3;
+      const ry = (px - 0.5) * 3;
+      manifestCard.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+    hero.addEventListener('mouseleave', () => {
+      manifestCard.style.transform = 'rotateX(0) rotateY(0)';
+    });
+  }
+
+</script>
+</body>
+</html>
