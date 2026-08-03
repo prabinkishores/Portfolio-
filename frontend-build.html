@@ -203,6 +203,27 @@ h1.page-title{
   .app-card{padding:24px 20px 28px;}
 }
 
+.section-divider{
+  font-family:var(--mono);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-faint);
+  display:flex;align-items:center;gap:14px;margin:44px 0 26px;
+}
+.section-divider::after{content:'';flex:1;height:1px;background:var(--line);}
+.section-lead{color:var(--ink-dim);font-size:14.5px;max-width:640px;margin:-10px 0 24px;}
+
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.badge{font-family:var(--mono);font-size:10.5px;padding:4px 11px;border-radius:20px;letter-spacing:0.03em;}
+.badge.n8n{color:var(--amber);border:1px solid rgba(255,122,41,0.4);background:rgba(255,122,41,0.08);}
+
+.flow-screenshot{
+  border-radius:10px;overflow:hidden;border:1px solid var(--line);
+  box-shadow:0 18px 44px rgba(8,10,14,0.45);margin:2px 0 6px;background:#fff;
+}
+.flow-screenshot img{display:block;width:100%;height:auto;}
+
+.flow-steps{color:var(--ink-dim);font-size:13.5px;margin:14px 0 4px;padding-left:18px;}
+.flow-steps li{margin-bottom:8px;}
+.flow-steps b{color:var(--ink);font-weight:700;}
+
 .placeholder-box{
   border:2px dashed var(--line);border-radius:6px;padding:52px 36px;text-align:center;
   background:radial-gradient(ellipse at top, rgba(255,122,41,0.05), transparent 60%);
@@ -231,9 +252,97 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0;margin-top:auto;}
     <span class="page-eyebrow">SKILL DETAIL</span>
     <h1 class="page-title">Building with AI</h1>
     <div class="shimmer-bar" aria-hidden="true"></div>
-    <p class="page-sub">Semantic HTML, CSS, responsive layouts, and Apps Script web apps.</p>
+    <p class="page-sub">n8n automation workflows, AI-assisted pipelines, and mobile-first web apps — built and shipped end-to-end.</p>
     <div class="block">
-      <p class="block-intro">Two mobile-first web apps I built and shipped end-to-end — from data model to UI to AI-assisted automation. Both are open-source on GitHub.</p>
+      <p class="block-intro">Below are three n8n workflows I built to automate recurring parts of my life — content posting, expense capture, and job hunting — followed by two mobile-first web apps. All five are open-source on GitHub.</p>
+
+      <div class="section-divider">n8n Automation Workflows</div>
+      <p class="section-lead">Each of these runs unattended on a schedule or trigger, chains together AI nodes (OpenAI/Gemini) with Google Sheets, Gmail, and external APIs, and handles its own error paths and retries.</p>
+
+      <!-- N8N 1: Instagram AI Content Posting -->
+      <div class="app-card">
+        <div class="app-head">
+          <div class="app-head-left">
+            <div class="app-icon">📸</div>
+            <div>
+              <div class="app-name">Instagram AI Content Posting</div>
+              <div class="app-tagline">Fully automated daily posting pipeline · n8n</div>
+            </div>
+          </div>
+          <a class="app-link" href="https://github.com/prabinkishores/Instagram-AI-Content-Posting-System" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+        <div class="badge-row"><span class="badge n8n">n8n</span><span class="badge n8n">OpenAI Image + Text</span><span class="badge n8n">Google Sheets</span><span class="badge n8n">Instagram Graph API</span><span class="badge n8n">Telegram Alerts</span></div>
+
+        <p class="app-desc">A workflow that runs every morning at 8AM, picks the next 5 unposted rows from a content-queue spreadsheet, generates an image and caption for each with AI, and publishes straight to Instagram — with a 3-hour delay between posts so it looks and reads as manually posted, not bot-spammed.</p>
+
+        <div class="app-subhead">How it works</div>
+        <ol class="flow-steps">
+          <li><b>Trigger &amp; queue.</b> A daily 8AM schedule reads all pending rows from the content sheet, filters out anything already posted, and picks the next 5 for the day.</li>
+          <li><b>Per-post AI pipeline.</b> For each post in the loop: an image is generated with AI, uploaded to ImgBB for a public URL, a caption is generated separately, then an Instagram media container is created via the Graph API.</li>
+          <li><b>Publish &amp; verify.</b> After a short wait for Instagram to process the container, the post is published and the workflow checks whether publishing actually succeeded.</li>
+          <li><b>Success path.</b> The row is marked "Posted" in the sheet, then the workflow waits 3 hours before moving to the next post — so all 5 land spaced out through the day.</li>
+          <li><b>Failure path.</b> If publishing fails, the row is marked "Failed" and I get a Telegram notification immediately instead of finding out days later.</li>
+        </ol>
+
+        <div class="app-subhead">Workflow Diagram</div>
+        <div class="flow-screenshot"><img src="assets/n8n/n8n-instagram-posting-workflow.png" alt="n8n workflow: Instagram AI Content Posting System — daily trigger, AI image/caption generation, Instagram publish with success/fail branching" loading="lazy"></div>
+      </div>
+
+      <!-- N8N 2: Spending Tracker -->
+      <div class="app-card">
+        <div class="app-head">
+          <div class="app-head-left">
+            <div class="app-icon">📩</div>
+            <div>
+              <div class="app-name">Spending Tracker — Capture &amp; Weekly Summary</div>
+              <div class="app-tagline">Gmail-triggered expense capture · n8n</div>
+            </div>
+          </div>
+          <a class="app-link" href="https://github.com/prabinkishores/Spending-Tracker-Capture-Weekly-Summary" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+        <div class="badge-row"><span class="badge n8n">n8n</span><span class="badge n8n">Gmail Trigger</span><span class="badge n8n">OpenAI Categorization</span><span class="badge n8n">Google Sheets</span><span class="badge n8n">Scheduled Digest</span></div>
+
+        <p class="app-desc">Two linked flows: one listens to my inbox in real time and logs every bank alert email as a transaction automatically; the other runs every Sunday night to total up the week and email me a summary — so spending tracking happens without me opening an app.</p>
+
+        <div class="app-subhead">How it works</div>
+        <ol class="flow-steps">
+          <li><b>Real-time capture.</b> A Gmail trigger fires on every new email; the body is parsed for a transaction amount. If none is found, the email is discarded.</li>
+          <li><b>AI categorization.</b> When an amount is present, an AI node reads the merchant name and classifies it into a spending category, which then gets normalized against a fixed category list before being appended as a new row in Google Sheets.</li>
+          <li><b>Weekly digest.</b> Every Sunday at 8PM, a separate schedule computes the last 7 days' date range, reads all transactions from the sheet, filters and sums them by category, and emails me a summary via Gmail.</li>
+        </ol>
+
+        <div class="app-subhead">Workflow Diagram</div>
+        <div class="flow-screenshot"><img src="assets/n8n/n8n-spending-tracker-workflow.png" alt="n8n workflow: Spending Tracker — Gmail-triggered expense capture and AI categorization, plus weekly summary digest" loading="lazy"></div>
+      </div>
+
+      <!-- N8N 3: Job Application Automation -->
+      <div class="app-card">
+        <div class="app-head">
+          <div class="app-head-left">
+            <div class="app-icon">💼</div>
+            <div>
+              <div class="app-name">Automated Job Applications &amp; Status Tracking</div>
+              <div class="app-tagline">LinkedIn + Indeed + Google Sheets · n8n</div>
+            </div>
+          </div>
+          <a class="app-link" href="https://github.com/prabinkishores/Automated-job-applications-status-tracking-with-LinkedIn-Indeed-Google-Sheets" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+        <div class="badge-row"><span class="badge n8n">n8n</span><span class="badge n8n">LinkedIn API</span><span class="badge n8n">Indeed API</span><span class="badge n8n">Google Sheets</span><span class="badge n8n">Gmail Notifications</span></div>
+
+        <p class="app-desc">Two linked workflows that turned job hunting into something that runs on autopilot: one applies to new listings with a personalized cover letter, the other checks in every couple of days on applications already sent and lets me know the moment a status changes.</p>
+
+        <div class="app-subhead">How it works</div>
+        <ol class="flow-steps">
+          <li><b>1. Apply to new jobs (daily).</b> Reads the job-listings sheet, filters to rows still marked "Not Applied," and processes them one by one — preparing a tailored cover letter and resume link for each, then routing the application to the correct platform (LinkedIn or Indeed) before recording the result and status back to the sheet and notifying me by email.</li>
+          <li><b>2. Track application status (every 2 days).</b> Reads every job already marked "Applied," checks each one's current status on the platform, and — only when a status has actually changed — updates the sheet and sends me an email; unchanged applications are skipped silently.</li>
+        </ol>
+
+        <div class="app-subhead">Workflow Diagram</div>
+        <div class="flow-screenshot"><img src="assets/n8n/n8n-job-application-workflow.png" alt="n8n workflow: Automated Job Applications and Status Tracking with LinkedIn, Indeed and Google Sheets" loading="lazy"></div>
+      </div>
+
+      <div class="section-divider">Mobile Web Apps</div>
+      <p class="section-lead">Two earlier React/TypeScript apps — still in daily use, now the secondary projects on this page.</p>
 
       <!-- APP 1: Expense Tracker -->
       <div class="app-card">
@@ -313,28 +422,6 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0;margin-top:auto;}
           <span>SheetJS (xlsx)</span><span>Express</span>
         </div>
 
-        <div class="app-subhead">Data Model — src/types.ts</div>
-        <div class="code-block">
-          <div class="code-block-header"><span>src/types.ts</span><span>TypeScript</span></div>
-          <pre><code><span class="tok-kw">export type</span> TransactionType = <span class="tok-str">'saving'</span> | <span class="tok-str">'expense'</span>;
-
-<span class="tok-kw">export interface</span> <span class="tok-type">Transaction</span> {
-  id: <span class="tok-type">string</span>;
-  type: TransactionType;
-  amount: <span class="tok-type">number</span>;
-  category: <span class="tok-type">string</span>;
-  description: <span class="tok-type">string</span>;
-  date: <span class="tok-type">string</span>; <span class="tok-com">// YYYY-MM-DD local format</span>
-  createdAt: <span class="tok-type">string</span>; <span class="tok-com">// ISO format Timestamp</span>
-}
-
-<span class="tok-kw">export interface</span> <span class="tok-type">SummaryStats</span> {
-  today: <span class="tok-type">number</span>;
-  thisWeek: <span class="tok-type">number</span>;
-  thisMonth: <span class="tok-type">number</span>;
-  total: <span class="tok-type">number</span>;
-}</code></pre>
-        </div>
       </div>
 
       <!-- APP 2: Invest / Savings Tracker -->
@@ -424,37 +511,6 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0;margin-top:auto;}
           <span>Firebase</span><span>Gemini API</span><span>Framer Motion</span><span>Lucide Icons</span>
         </div>
 
-        <div class="app-subhead">Data Model — src/types.ts</div>
-        <div class="code-block">
-          <div class="code-block-header"><span>src/types.ts</span><span>TypeScript</span></div>
-          <pre><code><span class="tok-kw">export type</span> SchemeType = <span class="tok-str">'RD'</span> | <span class="tok-str">'SSY'</span> | <span class="tok-str">'Stocks'</span> | <span class="tok-str">'MF'</span> | <span class="tok-str">'Chit'</span> | <span class="tok-str">'Custom'</span>;
-
-<span class="tok-kw">export interface</span> <span class="tok-type">Scheme</span> {
-  id: <span class="tok-type">string</span>;
-  name: <span class="tok-type">string</span>;
-  type: SchemeType;
-  sip: <span class="tok-type">number</span>;
-  plat: <span class="tok-type">string</span>;
-  userId?: <span class="tok-type">string</span>;
-  createdAt?: <span class="tok-type">string</span>;
-}
-
-<span class="tok-kw">export interface</span> <span class="tok-type">Entry</span> {
-  id: <span class="tok-type">string</span>;
-  month: <span class="tok-type">string</span>;          <span class="tok-com">// YYYY-MM</span>
-  date: <span class="tok-type">string</span>;           <span class="tok-com">// YYYY-MM-DD</span>
-  schemeId: <span class="tok-type">string</span>;
-  schemeName: <span class="tok-type">string</span>;
-  schemeType: SchemeType;
-  amount: <span class="tok-type">number</span>;
-  currentValue: <span class="tok-type">number</span>;
-  returnPct?: <span class="tok-type">number</span>;
-  mode: <span class="tok-type">string</span>;
-  notes: <span class="tok-type">string</span>;
-  userId?: <span class="tok-type">string</span>;
-  createdAt: <span class="tok-type">string</span>;      <span class="tok-com">// ISO timestamp</span>
-}</code></pre>
-        </div>
       </div>
 
     </div>
